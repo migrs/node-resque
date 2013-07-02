@@ -3,7 +3,7 @@
 var path = require ('path')
   , sys = require ('sys')
   , workerFile = process.env.WORKER
-  , workerName = workerFile ? path.basename (workerFile) : undefined
+  , hostName = process.env.HOSTNAME
   , queueName = process.env.QUEUE
   , redisUri = process.env.REDIS
   , options = {}
@@ -14,7 +14,7 @@ if ('undefined' === typeof workerFile || 0 === workerFile.length) {
 }
 
 if ('undefined' === typeof queueName || 0 === queueName.length)
-  queueName = workerName
+  queueName = 'default'
 
 if (redisUri && 0 !== redisUri.length) {
   var url = require('url').parse (redisUri)
@@ -37,7 +37,7 @@ var resque = require ('resque').connect (options)
 
 //resque.cleanStaleWorkers ()
 
-var worker = resque.createWorker (queueName, workerName, require (workerFile))
+var worker = resque.createWorker (queueName, hostName, require (workerFile))
 
 worker.start ()
 
