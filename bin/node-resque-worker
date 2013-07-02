@@ -35,7 +35,7 @@ var resque = require ('../lib/resque')
     .connect (options)
 var resque = require ('resque').connect (options)
 
-resque.cleanStaleWorkers ()
+//resque.cleanStaleWorkers ()
 
 var worker = resque.createWorker (queueName, workerName, require (workerFile))
 
